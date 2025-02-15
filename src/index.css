@@ -5,7 +5,7 @@
   
   --font-Nunito-sans : "Nunito Sans" , "sans-serif";
 
-  --color-Dark-Blue: hsl(209, 23%, 22%);
+  --color-background: var(--primary-background);
   --color-Very-Dark-Blue : hsl(207, 26%, 17%);
   --color-Very-Dark-Blue : hsl(200, 15%, 8%);
   --color-Dark-Gray : hsl(0, 0%, 52%);
@@ -17,5 +17,38 @@
   --shadow-button: rgba(0, 0, 0, 0.35) 0px 1px 8px;
   --shadow-button-sm: rgba(0, 0, 0, 0.35) 0.25px 0px 3px;
 }
+
+@layer base {
+
+  .light {
+    --primary-background : hsl(0, 0%, 100%);
+    --secondary-background: hsl(0, 0%, 98%);
+    --text-primary : hsl(200, 15%, 8%);
+   }
+
+   .dark {
+    --primary-background : hsl(209, 23%, 22%);
+    --secondary-background: hsl(207, 26%, 17%);
+    --text-primary : hsl(0, 0%, 100%);
+   }
+
+}
+
+@layer utilities{
+
+  .background-primary {
+    background-color: var(--primary-background);
+  }
+
+  .background-secondary {
+    background-color: var(--secondary-background);
+  }
+
+  .text-primary {
+    color: var(--text-primary);
+  }
+
+}
+
 
 

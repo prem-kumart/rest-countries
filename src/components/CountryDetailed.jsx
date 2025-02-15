@@ -5,7 +5,7 @@ import BorderButton from './Border.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const CountryDetailed = () => {
+const CountryDetailed = ({setTheme}) => {
 
   const [borderCountries,setBorderCountries] = useState([ ])
   const [isLoading,setIsLoading] = useState(false);
@@ -46,11 +46,11 @@ const CountryDetailed = () => {
  
   return (
           <>
-          <Header />
-          <section className='bg-Very-Light-Gray h-full w-full   pt-10 px-7 pb-10 font-Nunito-sans font-light flex flex-col gap-16 sm:px-20 overflow-y-auto'>
+          <Header setTheme={setTheme}/>
+          <section className='background-secondary  text-primary h-full w-full   pt-10 px-7 pb-10 font-Nunito-sans font-light flex flex-col gap-16 sm:px-20 overflow-y-auto'>
              
              <NavLink  to="/" >
-             <button className='flex items-center gap-2.5 shadow-button pl-8 pr-9 py-2 bg-white font-light rounded-sm hover:bg-gray-100'>
+             <button className='flex items-center gap-2.5 shadow-button pl-8 pr-9 py-2 background-primary font-light rounded-sm cursor-pointer'>
                   <FontAwesomeIcon icon={faArrowLeft} />
                   Back
              </button>
@@ -58,7 +58,7 @@ const CountryDetailed = () => {
           
              { country.current  && 
                    <div className='flex flex-col md:flex-row gap-11 xl:gap-36 md:items-center '>
-                       <img className=' w-[320px] h-[229px]  lg:w-[560px] lg:h-[401px] rounded-md' src={country.current.flags.svg} alt={`flag of ${country.current.name.common}`} />
+                       <img className=' w-[320px] h-[229px]  lg:w-[560px] lg:h-[401px] rounded-md object-cover' src={country.current.flags.svg} alt={`flag of ${country.current.name.common}`} />
                        <div className='flex flex-col gap-4'>
                             <h1 className='font-bold text-[32px]'>{country.current.name.common}</h1>
                             <div className='flex flex-col gap-8 '>

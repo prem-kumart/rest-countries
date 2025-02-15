@@ -5,12 +5,12 @@ import Country from './Country.jsx'
 import Header from './Header.jsx'
 
 
-const Main = () => {
+const Main = ({setTheme}) => {
 
   const [searchQuery,setSearchQuery] = useState('');
   const [countries,setCountries] =  useState([]);
   const [isLoading,setIsLoading] = useState(false);
-  // const [Error, setError] = useState('');
+  const [error, setError] = useState('');
   const [regionFilter,setRegionFilter] = useState('');
  
   const allCountries = useRef([]);
@@ -25,12 +25,12 @@ const Main = () => {
             setIsLoading(true)
             // setError({})
             const response = await fetch(`https://restcountries.com/v3.1/all`);
-            console.log(response);
+            //console.log(response);
             if(!response.ok){
                 throw new Error(JSON.stringify({status:response.status , message: response.message}))
             }
             const jsonData = await response.json();
-            console.log(jsonData)
+            //console.log(jsonData)
             
             allCountries.current = jsonData
             setCountries(allCountries.current);
@@ -39,7 +39,8 @@ const Main = () => {
         } 
         catch(error){
               const errorData = JSON.parse(error.message);
-              // setError(errorData);   
+              console.log(errorData)
+              setError(errorData);   
         }
     }
 
@@ -84,18 +85,18 @@ const Main = () => {
   return (
 
     <>
-    <Header />
-    <main className="flex flex-col gap-12 bg-Very-Light-Gray w-screen h-screen  pt-12  px-4 lg:px-20 font-Nunito-sans overflow-y-autos">
+    <Header  setTheme={setTheme} />
+    <main className="flex flex-col gap-12 background-secondary w-screen h-screen  pt-12  px-4 lg:px-20 font-Nunito-sans overflow-y-auto text-primary">
        <section className=' flex flex-col lg:flex-row gap-10 lg:justify-between'>
-          <div className='flex flex-row items-center w-full gap-6 rounded-sm bg-white shadow-lg px-3.5 lg:px-5 py-4 lg:w-max-[200px]'>
-            <FontAwesomeIcon icon={faMagnifyingGlass}  className='text-Dark-Gray'/>
-            <label> 
-                <input type="text" name="country"  value={searchQuery} placeholder='Search for a country...' onChange={onInput}/>
+          <div className='flex flex-row items-center w-full gap-6 rounded-sm background-primary  shadow-lg px-3.5 lg:px-5 py-4 lg:w-max-[200px]'>
+            <FontAwesomeIcon icon={faMagnifyingGlass}  className='text-primary'/>
+            <label > 
+                <input className="placeholder:text-primary" type="text" name="country"  value={searchQuery} placeholder='Search for a country...' onChange={onInput}/>
             </label>
           </div>
-           <div className='bg-white w-[50%]  shadow-lg rounded-[5px] '>
+           <div className='background-primary w-[50%]  shadow-lg rounded-[5px] '>
            <label className='flex flex-row gap-16 pl-6 pr-5 justify-between items-center' htmlFor='region'>
-                <select id='region'  value={regionFilter}  onChange={onRegionFilterChange} className="appearance-none font-Nunito-sans  bg-white py-3.5 lg:py-4 ">
+                <select id='region'  value={regionFilter}  onChange={onRegionFilterChange} className="appearance-none font-Nunito-sans background-primary py-3.5 lg:py-4 ">
                       <option className="bg-white" value="Africa">Africa </option>
                       <option value="America">America</option>
                       <option value="Asia">Asia</option>
@@ -109,9 +110,9 @@ const Main = () => {
        </section>
        <section className='flex flex-row flex-wrap justify-center items-center gap-18'>
            { isLoading && <p>Loading Countries...</p>}
-           {/* {
-             Error && <p className='text-red-50'>{`${Error.status}`}</p>
-           } */}
+           {
+             error.length > 0  && <p className='text-red-50'>{`${error.status}`}</p>
+           } 
            { countries && countries.map((countryData,index)=>{
                return <Country key={index} data={countryData}/>
            })}
