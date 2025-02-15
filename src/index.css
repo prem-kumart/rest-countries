@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+
+@theme {
+  
+  --font-Nunito-sans : "Nunito Sans" , "sans-serif";
+
+  --color-Dark-Blue: hsl(209, 23%, 22%);
+  --color-Very-Dark-Blue : hsl(207, 26%, 17%);
+  --color-Very-Dark-Blue : hsl(200, 15%, 8%);
+  --color-Dark-Gray : hsl(0, 0%, 52%);
+  --color-Very-Light-Gray : hsl(0, 0%, 98%);
+  --color-White : hsl(0, 0%, 100%);
+
+
+  /* shadows */
+  --shadow-button: rgba(0, 0, 0, 0.35) 0px 1px 8px;
+  --shadow-button-sm: rgba(0, 0, 0, 0.35) 0.25px 0px 3px;
+}
+
+
