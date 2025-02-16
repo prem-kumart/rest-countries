@@ -5,7 +5,7 @@ import Country from './Country.jsx'
 import Header from './Header.jsx'
 
 
-const Main = ({setTheme}) => {
+const Main = ({theme,setTheme}) => {
 
   const [searchQuery,setSearchQuery] = useState('');
   const [countries,setCountries] =  useState([]);
@@ -25,9 +25,9 @@ const Main = ({setTheme}) => {
             setIsLoading(true)
             // setError({})
             const response = await fetch(`https://restcountries.com/v3.1/all`);
-            //console.log(response);
             if(!response.ok){
-                throw new Error(JSON.stringify({status:response.status , message: response.message}))
+                
+              throw new Error(`Http Error: ${response.status}`)
             }
             const jsonData = await response.json();
             //console.log(jsonData)
@@ -37,10 +37,10 @@ const Main = ({setTheme}) => {
             setIsLoading(false)
          
         } 
-        catch(error){
-              const errorData = JSON.parse(error.message);
-              console.log(errorData)
-              setError(errorData);   
+        catch(e){
+              setIsLoading(false)
+              
+              setError(e.message)
         }
     }
 
@@ -81,37 +81,35 @@ const Main = ({setTheme}) => {
        })
        setCountries(newCountryList);
   }
-
+ 
   return (
-
+ 
     <>
-    <Header  setTheme={setTheme} />
+    <Header theme={theme} setTheme={setTheme} />
     <main className="flex flex-col gap-12 background-secondary w-screen h-screen  pt-12  px-4 lg:px-20 font-Nunito-sans overflow-y-auto text-primary">
-       <section className=' flex flex-col lg:flex-row gap-10 lg:justify-between'>
+       <section className=' flex flex-col lg:flex-row  gap-10 lg:justify-between'>
           <div className='flex flex-row items-center w-full gap-6 rounded-sm background-primary  shadow-lg px-3.5 lg:px-5 py-4 lg:w-max-[200px]'>
             <FontAwesomeIcon icon={faMagnifyingGlass}  className='text-primary'/>
             <label > 
-                <input className="placeholder:text-primary" type="text" name="country"  value={searchQuery} placeholder='Search for a country...' onChange={onInput}/>
+                <input className={`${theme =='light' ? "text-Dark-Gray" : "text-white" }`} type="text" name="country"  value={searchQuery} placeholder='Search for a country...' onChange={onInput}/>
             </label>
           </div>
-           <div className='background-primary w-[50%]  shadow-lg rounded-[5px] '>
-           <label className='flex flex-row gap-16 pl-6 pr-5 justify-between items-center' htmlFor='region'>
-                <select id='region'  value={regionFilter}  onChange={onRegionFilterChange} className="appearance-none font-Nunito-sans background-primary py-3.5 lg:py-4 ">
-                      <option className="bg-white" value="Africa">Africa </option>
+           <div className='self-start background-primary shadow-lg rounded-[5px] flex flex-row items-center gap-2.5'>
+                <select id='region'  value={regionFilter}  onChange={onRegionFilterChange} className=" background-primary py-3.5 lg:py-4 px-10">
+                      <option value="Africa">Africa </option>
                       <option value="America">America</option>
                       <option value="Asia">Asia</option>
                       <option value="Europe">Europe</option>
                       <option value="Oceania">Oceania</option>
                       <option  value="">Filter by Region</option>
               </select> 
-              <FontAwesomeIcon icon={faAngleDown} className='w-[10px] h-[10px] pointer-events-none'/>
-            </label>
+              {/* <FontAwesomeIcon icon={faAngleDown} className='w-[10px] h-[10px] pointer-events-none'/> */}
           </div>
        </section>
        <section className='flex flex-row flex-wrap justify-center items-center gap-18'>
            { isLoading && <p>Loading Countries...</p>}
            {
-             error.length > 0  && <p className='text-red-50'>{`${error.status}`}</p>
+             error != 0  && <p className='text-red-800'>{error}</p>
            } 
            { countries && countries.map((countryData,index)=>{
                return <Country key={index} data={countryData}/>

@@ -13,7 +13,7 @@ function App() {
     <div className={`${theme} w-full h-full`}>
       <BrowserRouter>
          <Routes>
-             <Route path="/" element={<Main  setTheme={setTheme}/>} />
+             <Route path="/" element={<Main theme={theme} setTheme={setTheme}/>} />
              <Route path='/:country' element={<CountryDetailed setTheme={setTheme} />} />
              <Route path='*' element={<NotFound />} />
          </Routes>
