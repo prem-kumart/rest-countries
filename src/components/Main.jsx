@@ -4,6 +4,8 @@ import { useEffect, useState, useRef } from 'react'
 import Country from './Country.jsx'
 import Header from './Header.jsx'
 
+const regionFilters = ['Africa','America','Asia','Europe','Oceania']
+
 
 const Main = ({theme,setTheme}) => {
 
@@ -15,6 +17,7 @@ const Main = ({theme,setTheme}) => {
  
   const allCountries = useRef([]);
   
+  const dropDownRef = useRef(null);
 
 
   // On Initial mount fetching all the countries data and caching it in allCountries using useRef hook.
@@ -51,8 +54,6 @@ const Main = ({theme,setTheme}) => {
 
   //OnSearch for a country
   function onInput(event){
-      
-       console.log(event.target.value)
        setSearchQuery(event.target.value);
        if(event.target.value == ""){
          setCountries(allCountries.current);
@@ -70,8 +71,6 @@ const Main = ({theme,setTheme}) => {
   }
 
   function onRegionFilterChange(event){
-       console.log(event.target.value);
-
        setRegionFilter(event.target.value);
        const newCountryList = allCountries.current.filter((country)=>{
              
@@ -81,6 +80,12 @@ const Main = ({theme,setTheme}) => {
        })
        setCountries(newCountryList);
   }
+
+  function toggleDropDownList(){ 
+    const dropDown = dropDownRef.current.nextElementSibling;
+    dropDown.classList.toggle('hide-dropdown');
+  }
+
  
   return (
  
@@ -94,17 +99,19 @@ const Main = ({theme,setTheme}) => {
                 <input className={`${theme =='light' ? "text-Dark-Gray" : "text-white" }`} type="text" name="country"  value={searchQuery} placeholder='Search for a country...' onChange={onInput}/>
             </label>
           </div>
-           <div className='self-start background-primary shadow-lg rounded-[5px] flex flex-row items-center gap-2.5'>
-                <select id='region'  value={regionFilter}  onChange={onRegionFilterChange} className=" background-primary py-3.5 lg:py-4 px-10">
-                      <option value="Africa">Africa </option>
-                      <option value="America">America</option>
-                      <option value="Asia">Asia</option>
-                      <option value="Europe">Europe</option>
-                      <option value="Oceania">Oceania</option>
-                      <option  value="">Filter by Region</option>
-              </select> 
-              {/* <FontAwesomeIcon icon={faAngleDown} className='w-[10px] h-[10px] pointer-events-none'/> */}
+          {/*-- Custom Dropdown Structure */}
+          <div className="custom-select">
+            <button ref={dropDownRef} onClick={toggleDropDownList} className="select-button">
+              <span className="selected-value">Filter By Region</span>
+              <span className="arrow-icon"></span>
+            </button>
+            <ul className="select-dropdown hide-dropdown">
+            { regionFilters.map((region,index)=>{
+                return <li key={index} className="select-option" onClick={onRegionFilterChange}>{region}</li>
+              }) }
+            </ul>
           </div>
+
        </section>
        <section className='flex flex-row flex-wrap justify-center items-center gap-18'>
            { isLoading && <p>Loading Countries...</p>}
