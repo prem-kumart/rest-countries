@@ -9,7 +9,7 @@ const CountryDetailed = ({theme,setTheme}) => {
 
   const [borderCountries,setBorderCountries] = useState([ ])
   const [isLoading,setIsLoading] = useState(false);
-  const [Error, setError] = useState({});
+  const [error, setError] = useState('');
   const params = useParams();
   const country = useRef('')
 
@@ -19,13 +19,12 @@ const CountryDetailed = ({theme,setTheme}) => {
 
       try {
           setIsLoading(true)
-          setError({})
+          setError('')
           const response = await fetch(`https://restcountries.com/v3.1/name/${params.country}?fullText=true`);
           if(!response.ok){
             throw new Error(`Http Error: ${response.status}`)
           }
           const jsonData = await response.json();
-          //console.log(jsonData)
           country.current = jsonData[0]
 
         setBorderCountries(country.current.borders ? country.current.borders : []);
@@ -54,7 +53,7 @@ const CountryDetailed = ({theme,setTheme}) => {
              </button>
              </NavLink>
               { isLoading && <p>Loading...</p> }
-              { Error.message && <p>{Error.message}</p> }
+              { error != ''  && <p>{error}</p> }
              { country.current  && 
                    <div className='flex flex-col md:flex-row gap-11 xl:gap-36 md:items-center '>
                        <img className=' w-[320px] h-[229px]  lg:w-[560px] lg:h-[401px] rounded-md object-cover' src={country.current.flags.svg} alt={`flag of ${country.current.name.common}`} />

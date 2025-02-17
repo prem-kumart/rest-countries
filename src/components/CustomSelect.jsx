@@ -3,7 +3,11 @@
 const CustomSelect = ({dropDownRef,toggleDropDownList,regionFilter,regionFilters,theme,onRegionFilterChange}) => {
   return ( 
        <div className="custom-select w-[200px] ">
-            <button ref={dropDownRef} onClick={toggleDropDownList} className="select-button background-primary rounded-md shadow-lg py-[18px] px-5">
+            <button ref={dropDownRef} onClick={toggleDropDownList} className="select-button background-primary rounded-md shadow-lg py-[18px] px-5" role="combobox"
+                             aria-label="select button"
+                             aria-haspopup="listbox"
+                             aria-expanded="false"
+                             aria-controls="select-dropdown">
               <span className="selected-value text-primary">{regionFilter ? regionFilter : "Filter By Region"}</span>
               <span className={`arrow-icon ${theme=='light' ? "border-Very-Dark-Blue"  : "border-White"}`}></span>
             </button>

@@ -1,12 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' 
-import { faAngleDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState, useRef } from 'react'
 import Country from './Country.jsx'
 import Header from './Header.jsx'
 import CustomSelect from './CustomSelect.jsx'
 
 const regionFilters = ['Africa','America','Asia','Europe','Oceania']
-
 
 const Main = ({theme,setTheme}) => {
 
@@ -106,7 +105,7 @@ const Main = ({theme,setTheme}) => {
        <section className='flex flex-row flex-wrap justify-center items-center gap-18'>
            { isLoading && <p>Loading Countries...</p>}
            {
-             error != 0  && <p className='text-red-800'>{error}</p>
+             error && <p className='text-red-800'>{error}</p>
            } 
            { countries && countries.map((countryData,index)=>{
                return <Country key={index} data={countryData}/>
