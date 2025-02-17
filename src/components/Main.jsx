@@ -71,14 +71,15 @@ const Main = ({theme,setTheme}) => {
   }
 
   function onRegionFilterChange(event){
-       setRegionFilter(event.target.value);
+       setRegionFilter(event.target.innerText);
        const newCountryList = allCountries.current.filter((country)=>{
              
-               if(country.region.toLowerCase().includes(event.target.value.toLowerCase())){
+               if(country.region.toLowerCase().includes(event.target.innerText.toLowerCase())){
                  return country
                }
        })
        setCountries(newCountryList);
+        toggleDropDownList();
   }
 
   function toggleDropDownList(){ 
@@ -99,15 +100,17 @@ const Main = ({theme,setTheme}) => {
                 <input className={`${theme =='light' ? "text-Dark-Gray" : "text-white" }`} type="text" name="country"  value={searchQuery} placeholder='Search for a country...' onChange={onInput}/>
             </label>
           </div>
+
+          
           {/*-- Custom Dropdown Structure */}
           <div className="custom-select">
-            <button ref={dropDownRef} onClick={toggleDropDownList} className="select-button">
-              <span className="selected-value">Filter By Region</span>
-              <span className="arrow-icon"></span>
+            <button ref={dropDownRef} onClick={toggleDropDownList} className="select-button background-primary rounded-md shadow-lg">
+              <span className="selected-value text-primary">{regionFilter ? regionFilter : "Filter By Region"}</span>
+              <span className="arrow-icon background-primary"></span>
             </button>
             <ul className="select-dropdown hide-dropdown">
             { regionFilters.map((region,index)=>{
-                return <li key={index} className="select-option" onClick={onRegionFilterChange}>{region}</li>
+                return <li key={index} className={`select-option background-primary hover:${theme=="light" ?"bg-Very-Light-Gray"  : "bg-Very-Dark-Blue" }`} onClick={onRegionFilterChange}>{region}</li>
               }) }
             </ul>
           </div>
