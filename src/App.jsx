@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
          <Routes>
              <Route path="/" element={<Main theme={theme} setTheme={setTheme}/>} />
-             <Route path='/:country' element={<CountryDetailed setTheme={setTheme} />} />
+             <Route path='/:country' element={<CountryDetailed theme={theme} setTheme={setTheme} />} />
              <Route path='*' element={<NotFound />} />
          </Routes>
       </BrowserRouter>

@@ -5,7 +5,7 @@ import BorderButton from './Border.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const CountryDetailed = ({setTheme}) => {
+const CountryDetailed = ({theme,setTheme}) => {
 
   const [borderCountries,setBorderCountries] = useState([ ])
   const [isLoading,setIsLoading] = useState(false);
@@ -44,7 +44,7 @@ const CountryDetailed = ({setTheme}) => {
  
   return (
           <>
-          <Header setTheme={setTheme}/>
+          <Header theme={theme} setTheme={setTheme}/>
           <section className='background-secondary  text-primary h-full w-full   pt-10 px-7 pb-10 font-Nunito-sans font-light flex flex-col gap-16 sm:px-20 overflow-y-auto'>
              
              <NavLink  to="/" >

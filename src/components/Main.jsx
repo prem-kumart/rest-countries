@@ -3,6 +3,7 @@ import { faAngleDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icon
 import { useEffect, useState, useRef } from 'react'
 import Country from './Country.jsx'
 import Header from './Header.jsx'
+import CustomSelect from './CustomSelect.jsx'
 
 const regionFilters = ['Africa','America','Asia','Europe','Oceania']
 
@@ -87,33 +88,19 @@ const Main = ({theme,setTheme}) => {
     dropDown.classList.toggle('hide-dropdown');
   }
 
- 
   return (
- 
     <>
     <Header theme={theme} setTheme={setTheme} />
     <main className="flex flex-col gap-12 background-secondary w-screen h-screen  pt-12  px-4 lg:px-20 font-Nunito-sans overflow-y-auto text-primary">
-       <section className=' flex flex-col lg:flex-row  gap-10 lg:justify-between'>
-          <div className='flex flex-row items-center w-full gap-6 rounded-sm background-primary  shadow-lg px-3.5 lg:px-5 py-4 lg:w-max-[200px]'>
+       <section className=' flex flex-col sm:flex-row gap-10  sm:h-[56px] sm:items-center lg:justify-between'>
+          <div className='flex flex-row items-center max-w-[480px] w-full  gap-6 rounded-sm background-primary  shadow-lg px-3.5 lg:px-5 py-4 lg:w-max-[200px]'>
             <FontAwesomeIcon icon={faMagnifyingGlass}  className='text-primary'/>
             <label > 
                 <input className={`${theme =='light' ? "text-Dark-Gray" : "text-white" }`} type="text" name="country"  value={searchQuery} placeholder='Search for a country...' onChange={onInput}/>
             </label>
           </div>
-
-          
-          {/*-- Custom Dropdown Structure */}
-          <div className="custom-select">
-            <button ref={dropDownRef} onClick={toggleDropDownList} className="select-button background-primary rounded-md shadow-lg">
-              <span className="selected-value text-primary">{regionFilter ? regionFilter : "Filter By Region"}</span>
-              <span className="arrow-icon background-primary"></span>
-            </button>
-            <ul className="select-dropdown hide-dropdown">
-            { regionFilters.map((region,index)=>{
-                return <li key={index} className={`select-option background-primary hover:${theme=="light" ?"bg-Very-Light-Gray"  : "bg-Very-Dark-Blue" }`} onClick={onRegionFilterChange}>{region}</li>
-              }) }
-            </ul>
-          </div>
+       {/*-- Custom Dropdown Structure */}
+       <CustomSelect regionFilters={regionFilters} onRegionFilterChange={onRegionFilterChange} dropDownRef={dropDownRef} toggleDropDownList={toggleDropDownList} theme={theme} regionFilter={regionFilter}/>
 
        </section>
        <section className='flex flex-row flex-wrap justify-center items-center gap-18'>
