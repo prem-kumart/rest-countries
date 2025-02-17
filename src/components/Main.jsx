@@ -26,15 +26,12 @@ const Main = ({theme,setTheme}) => {
     async function fetchData() {
         try {
             setIsLoading(true)
-            // setError({})
+            setError('');
             const response = await fetch(`https://restcountries.com/v3.1/all`);
             if(!response.ok){
-                
               throw new Error(`Http Error: ${response.status}`)
             }
             const jsonData = await response.json();
-            //console.log(jsonData)
-            
             allCountries.current = jsonData
             setCountries(allCountries.current);
             setIsLoading(false)
@@ -54,7 +51,10 @@ const Main = ({theme,setTheme}) => {
 
   //OnSearch for a country
   function onInput(event){
+
+
        setSearchQuery(event.target.value);
+
        if(event.target.value == ""){
          setCountries(allCountries.current);
          return;
@@ -91,11 +91,11 @@ const Main = ({theme,setTheme}) => {
     <>
     <Header theme={theme} setTheme={setTheme} />
     <main className="flex flex-col gap-12 background-secondary w-screen h-screen  pt-12  px-4 lg:px-20 font-Nunito-sans overflow-y-auto text-primary">
-       <section className=' flex flex-col sm:flex-row gap-10  sm:h-[56px] sm:items-center lg:justify-between'>
+       <section className=' flex flex-col sm:flex-row gap-10  sm:h-[56px] sm:items-center sm:justify-between'>
           <div className='flex flex-row items-center max-w-[480px] w-full  gap-6 rounded-sm background-primary  shadow-lg px-3.5 lg:px-5 py-4 lg:w-max-[200px]'>
             <FontAwesomeIcon icon={faMagnifyingGlass}  className='text-primary'/>
             <label > 
-                <input className={`${theme =='light' ? "text-Dark-Gray" : "text-white" }`} type="text" name="country"  value={searchQuery} placeholder='Search for a country...' onChange={onInput}/>
+                <input className={`${theme =='light' ? "text-Very-Dark-Blue" : "text-white" }`} type="text" name="country"  value={searchQuery} placeholder='Search for a country...' onChange={onInput}/>
             </label>
           </div>
        {/*-- Custom Dropdown Structure */}
@@ -103,7 +103,7 @@ const Main = ({theme,setTheme}) => {
 
        </section>
        <section className='flex flex-row flex-wrap justify-center items-center gap-18'>
-           { isLoading && <p>Loading Countries...</p>}
+           { isLoading && <div className="animate-spin w-5 h-5 border-t-2 border-b-2 border-primary rounded-full"></div>}
            {
              error && <p className='text-red-800'>{error}</p>
            } 

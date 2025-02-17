@@ -52,8 +52,8 @@ const CountryDetailed = ({theme,setTheme}) => {
                   Back
              </button>
              </NavLink>
-              { isLoading && <p>Loading...</p> }
-              { error != ''  && <p>{error}</p> }
+              { isLoading && <div className="animate-spin w-5 h-5 border-t-2 border-b-2 border-primary rounded-full"></div>}
+              { error  && <p>{error}</p> }
              { country.current  && 
                    <div className='flex flex-col md:flex-row gap-11 xl:gap-36 md:items-center '>
                        <img className=' w-[320px] h-[229px]  lg:w-[560px] lg:h-[401px] rounded-md object-cover' src={country.current.flags.svg} alt={`flag of ${country.current.name.common}`} />
