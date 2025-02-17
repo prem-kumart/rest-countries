@@ -46,7 +46,7 @@ const CountryDetailed = ({theme,setTheme}) => {
           <Header theme={theme} setTheme={setTheme}/>
           <section className='background-secondary  text-primary h-full w-full   pt-10 px-7 pb-10 font-Nunito-sans font-light flex flex-col gap-16 sm:px-20 overflow-y-auto'>
              
-             <NavLink  to="/rest-countries" >
+             <NavLink  to="/" >
              <button className='flex items-center gap-2.5 shadow-button pl-8 pr-9 py-2 background-primary font-light rounded-sm cursor-pointer'>
                   <FontAwesomeIcon icon={faArrowLeft} />
                   Back
