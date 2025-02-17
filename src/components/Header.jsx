@@ -5,7 +5,7 @@ const Header = ({theme,setTheme}) => {
 
   return (
     <header className="flex flex-row justify-between background-primary px-4 sm:px-20 py-6 shadow-lg font-Nunito-sans">
-         <NavLink to="/" >
+         <NavLink to="/rest-countries" >
              <h1 className="text-primary font-extrabold text-sm sm:text-2xl">Where in the world?</h1>
         </NavLink>
         <div className="flex flex-row gap-2 items-center cursor-pointer" onClick={()=>setTheme((theme)=> theme === 'light' ? 'dark' : 'light')}>
